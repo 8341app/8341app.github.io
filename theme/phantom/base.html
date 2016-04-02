@@ -6,13 +6,20 @@
 -->
 <html>
 	<head>
-		<title>Phantom by HTML5 UP</title>
+		<title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 8]><script src="{{ base_url }}/assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="{{ base_url }}/assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="{{ base_url }}/assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="{{ base_url }}/assets/css/ie8.css" /><![endif]-->
+
+    {% for path in extra_css %}
+      <link href="{{ path }}" rel="stylesheet">
+    {% endfor %}
+
+    {% block extrahead %}
+    {% endblock %}
 	</head>
 	<body>
 		<!-- Wrapper -->
@@ -23,8 +30,8 @@
 						<div class="inner">
 
 							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Phantom</span>
+								<a href="{{ base_url }}/index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">8341</span>
 								</a>
 
 							<!-- Nav -->
@@ -40,22 +47,22 @@
 				<!-- Menu -->
 					<nav id="menu">
 						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">Ipsum veroeros</a></li>
-							<li><a href="generic.html">Tempus etiam</a></li>
-							<li><a href="generic.html">Consequat dolor</a></li>
-							<li><a href="elements.html">Elements</a></li>
-						</ul>
+            <ul>
+            {% for nav_item in nav %}
+              {% include "nav.html" %}
+            {% endfor %}
+            <li><a href="elements.html">Elements</a></li>
+            </ul>
+
 					</nav>
 
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
 							<header>
-								<h1>This is Phantom, a free, fully responsive site<br />
-								template designed by <a href="http://html5up.net">HTML5 UP</a>.</h1>
-								<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
+								<h1>8341 is Free and Open Source <br />Property Management Platform.</h1>
+								<p>In December 2015, I'm the Apartment Manager of a 16 units in 8341 15th St, Westminster, CA. I can't find a simple Property Management system that is free so I created 8341.</p>
+                <p> - Kien, Apartment Manager, Software Engineer </p>
 							</header>
 							<section class="tiles">
 								<article class="style1">
@@ -236,11 +243,26 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+			<script src="{{ base_url }}/assets/js/jquery.min.js"></script>
+			<script src="{{ base_url }}/assets/js/skel.min.js"></script>
+			<script src="{{ base_url }}/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="{{ base_url }}/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="{{ base_url }}/assets/js/main.js"></script>
 
+      {% for path in extra_javascript %}
+        <script src="{{ path }}"></script>
+      {% endfor %}
+
+      {% if google_analytics %}
+      <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', '{{ google_analytics[0] }}', '{{ google_analytics[1] }}');
+          ga('send', 'pageview');
+      </script>
+      {% endif %}
 	</body>
 </html>
